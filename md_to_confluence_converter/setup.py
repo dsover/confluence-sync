@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="markdown_to_confluence",
+    name="md_to_confluence",
     version="0.2",
     packages=find_packages(),
     entry_points={

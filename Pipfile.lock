@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4560e182a25f90148780bba249b8c512bd03ec9ae6bffcd5463ab98f462b889e"
+            "sha256": "65d6411fa615103dae41cd36a86a173b80433d52e694e93b3fbd1118dbbfbe18"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -128,9 +128,6 @@
             "markers": "python_version >= '3.5'",
             "version": "==3.6"
         },
-        "markdown-to-confluence": {
-            "version": "==0.2"
-        },
         "markdown2": {
             "hashes": [
                 "sha256:1bc8692696954d597778e0e25713c14ca56d87992070dedd95c17eddaf709204",
@@ -139,6 +136,10 @@
             "index": "pypi",
             "markers": "python_version >= '3.5' and python_version < '4'",
             "version": "==2.4.12"
+        },
+        "md-to-confluence": {
+            "editable": true,
+            "path": "./md_to_confluence_converter"
         },
         "requests": {
             "hashes": [
