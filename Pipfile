@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-markdown_to_confluence_converter = {path = "./markdown_to_confluence_converter", editable = true}
+md_to_confluence = {path = "./md_to_confluence_converter", editable = true}
 markdown2 = "*"
 requests = "*"
 
