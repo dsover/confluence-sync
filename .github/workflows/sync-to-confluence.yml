@@ -1,0 +1,25 @@
+name: Sync Markdown to Confluence
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        pip install pipenv
+        pipenv install
+    - name: Run Sync Script
+      run: |
+        source .env
+        pipenv run python markdown_to_confluence_converter/sync_script.py
