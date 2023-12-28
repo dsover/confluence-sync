@@ -1,25 +1,26 @@
-name: Sync Markdown to Confluence
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
-  build:
+  sync:
     runs-on: ubuntu-latest
-
+    env:
+      CONFLUENCE_SPACE_KEY: '~633bd6679b32cfef9328a8c7'
+      CONFLUENCE_PARENT_ID: '744654601'
+      CONFLUENCE_BASE_URL: 'https://wbdstreaming.atlassian.net/wiki'
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
+
     - name: Install dependencies
       run: |
         pip install pipenv
         pipenv install
-    - name: Run Sync Script
+
+    - name: Run md2conf command
       run: |
-        source .env
-        pipenv run python markdown_to_confluence_converter/sync_script.py
+        pipenv run md2conf --convert --sync --output-dir out --input-dir ./doc
+      env:
+        CONFLUENCE_USERNAME: ${{ secrets.CONFLUENCE_USERNAME }}
+        CONFLUENCE_API_TOKEN: ${{ secrets.CONFLUENCE_API_TOKEN }}
