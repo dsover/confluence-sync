@@ -1,0 +1,1 @@
+# This tests that the action worked
