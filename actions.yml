@@ -1,0 +1,41 @@
+name: 'Sync Markdown to Confluence'
+description: 'This action syncs Markdown files to Confluence.'
+
+inputs:
+  confluence-space-key:
+    description: 'Confluence Space Key'
+    required: true
+    default: '~633bd6679b32cfef9328a8c7'
+  confluence-parent-id:
+    description: 'Confluence Parent ID'
+    required: true
+    default: '744654601'
+  confluence-base-url:
+    description: 'Confluence Base URL'
+    required: true
+    default: 'https://wbdstreaming.atlassian.net/wiki'
+  confluence-username:
+    description: 'Confluence Username'
+    required: true
+  confluence-api-token:
+    description: 'Confluence API Token'
+    required: true
+  input-dir:
+    description: 'Input directory for Markdown files'
+    required: true
+    default: './doc'
+
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        pip install pipenv
+        pipenv install
+        pipenv run md2conf --convert --sync --output-dir out --input-dir ${{ inputs.input-dir }}
+      shell: bash
+      env:
+        CONFLUENCE_USERNAME: ${{ inputs.confluence-username }}
+        CONFLUENCE_API_TOKEN: ${{ inputs.confluence-api-token }}
+        CONFLUENCE_SPACE_KEY: ${{ inputs.confluence-space-key }}
+        CONFLUENCE_PARENT_ID: ${{ inputs.confluence-parent-id }}
+        CONFLUENCE_BASE_URL: ${{ inputs.confluence-base-url }}
