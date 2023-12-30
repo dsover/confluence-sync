@@ -31,9 +31,8 @@ runs:
     - run: |
         pip install pipenv
         pipenv install
-        echo $PATH
-        pipenv shell
-        md2conf --convert --sync --output-dir out --input-dir ${{ inputs.input-dir }}
+        pipenv run pip list
+        pipenv run md2conf --convert --sync --output-dir out --input-dir ${{ inputs.input-dir }}
       shell: bash
       env:
         CONFLUENCE_USERNAME: ${{ inputs.confluence-username }}
