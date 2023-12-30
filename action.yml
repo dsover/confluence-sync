@@ -33,6 +33,7 @@ runs:
         cd ./temp-confluence-sync
         pip install pipenv
         pipenv install
+        pipenv graph
         cd ..
         pipenv run ./temp-confluence-sync/md_to_confluence_converter --convert --sync --output-dir out --input-dir ${{ inputs.input-dir }}
       shell: bash
