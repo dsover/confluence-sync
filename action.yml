@@ -28,12 +28,15 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 2 # Fetches two commits. Set to 0 for all history.
     - run: |
-        cd $GITHUB_ACTION_PATH && \
-        ls && \
-        pip install pipenv && \
-        pipenv install && \
-        pipenv run md2conf --convert --sync --output-dir out --input-dir ${{ github.workspace }}/${{ inputs.input-dir }}
+        cd $GITHUB_ACTION_PATH/md_to_confluence_converter && \
+        pip install . && \
+        cd $GITHUB_WORKSPACE && \
+        git log && \
+        md2conf --convert --sync --output-dir out --input-dir ${{ inputs.input-dir }}
       shell: bash
       env:
         CONFLUENCE_USERNAME: ${{ inputs.confluence-username }}
