@@ -1,5 +1,13 @@
 import os
+import subprocess
 import markdown2
+
+def list_files_changed_in_last_commit():
+    # Run git command to get list of files changed in the last commit
+    result = subprocess.run(['git', 'diff', '--name-only', 'HEAD^', 'HEAD'], capture_output=True, text=True)
+    if result.stderr:
+        raise RuntimeError(f"Git command failed: {result.stderr}")
+    return result.stdout.splitlines()
 
 def convert_md_to_html(md_file_path, output_file_path):
     """
@@ -28,17 +36,18 @@ def convert_directory(input_dir, output_dir):
     """
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-
+    changed_file_list = list_files_changed_in_last_commit()
     for root, dirs, files in os.walk(input_dir):
         for file in files:
             if file.endswith(".md"):
-                md_file_path = os.path.join(root, file)
-                relative_path = os.path.relpath(root, input_dir)
-                output_file_dir = os.path.join(output_dir, relative_path)
-                output_file_path = os.path.join(output_file_dir, os.path.splitext(file)[0] + '.html')
-                
-                if not os.path.exists(output_file_dir):
-                    os.makedirs(output_file_dir)
+                if os.path.join(root, file)[2:] in changed_file_list:
+                    md_file_path = os.path.join(root, file)
+                    relative_path = os.path.relpath(root, input_dir)
+                    output_file_dir = os.path.join(output_dir, relative_path)
+                    output_file_path = os.path.join(output_file_dir, os.path.splitext(file)[0] + '.html')
+                    
+                    if not os.path.exists(output_file_dir):
+                        os.makedirs(output_file_dir)
 
-                convert_md_to_html(md_file_path, output_file_path)
-                print(f"Converted '{md_file_path}' to '{output_file_path}'")
+                    convert_md_to_html(md_file_path, output_file_path)
+                    print(f"Converted '{md_file_path}' to '{output_file_path}'")
