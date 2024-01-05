@@ -17,3 +17,4 @@ A [link](http://example.com).
 Block code example
 with multiple lines
 ```
+<small> small change </small>
